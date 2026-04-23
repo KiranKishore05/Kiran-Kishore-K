@@ -1445,51 +1445,64 @@ section {
   stroke: currentColor;
   stroke-width: 2;
 }
-
 /* ============================================================
-   CONTACT SECTION
+   CONTACT SECTION 
    ============================================================ */
+
 #contact {
   background: transparent;
+  /* 1. Offset for the Sidebar: adjust 280px to match your actual sidebar width */
+  padding: 60px 50px 80px 310px; 
+  width: 100%;
+  justify-content: center; /* Centers the content block in the remaining space */
 }
-
+.contact-section {
+    min-height: 100vh; /* Ensures it takes up the full screen */
+    display: flex;
+    flex-direction: column;
+    overflow: visible; /* Prevents content from being hidden */
+}
 .contact-inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* 2. Proper width adjustment: 1fr for cards, 1.2fr for map */
+  grid-template-columns: minmax(3px, 1fr) 1.5fr;
   gap: 40px;
+  width: 100%;
+  max-width: 1200px; /* Prevents the layout from getting too wide */
+  align-items: stretch;
 }
 
 .contact-cards {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  justify-content: center;
 }
 
 .contact-card {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 20px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
   padding: 20px;
   box-shadow: var(--shadow-sm);
-  transition:
-    transform var(--transition),
-    box-shadow var(--transition),
-    border-color var(--transition);
+  transition: transform var(--transition), 
+              box-shadow var(--transition), 
+              border-color var(--transition);
 }
 
 .contact-card:hover {
-  transform: translateX(4px);
+  transform: translateX(8px);
   box-shadow: var(--shadow-md);
   border-color: var(--accent);
 }
 
 .contact-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-sm);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   background: var(--accent-soft);
   display: flex;
   align-items: center;
@@ -1499,52 +1512,89 @@ section {
 }
 
 .contact-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
 }
 
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevents long emails from breaking the card */
+}
+
 .contact-label {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text2);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .contact-value {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .contact-value a {
   color: var(--accent);
+  text-decoration: none;
   transition: opacity var(--transition);
 }
+
 .contact-value a:hover {
   opacity: 0.8;
+  text-decoration: underline;
 }
 
+/* Map Styling */
 .map-wrap {
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow-md);
   height: 100%;
-  min-height: 280px;
+  min-height: 400px; /* Makes map height match the cards height */
 }
 
 .map-wrap iframe {
   width: 100%;
   height: 100%;
   border: none;
-  min-height: 280px;
   display: block;
+}
+
+
+/* ============================================================
+   RESPONSIVE FIXES (Mobile & Tablet)
+   ============================================================ */
+
+/* If screen is medium (Laptop/Tablet) */
+@media (max-width: 1024px) {
+  #contact {
+    padding-left: 280px; /* Matches smaller sidebar width */
+  }
+  .contact-inner {
+    grid-template-columns: 1fr; /* Stack map under cards */
+  }
+}
+
+/* If screen is mobile (Sidebar usually hidden or top-nav) */
+@media (max-width: 768px) {
+  #contact {
+    padding: 60px 20px; /* Remove large left padding on mobile */
+  }
+  .contact-inner {
+    gap: 20px;
+  }
+  .map-wrap {
+    min-height: 300px;
+  }
 }
 
 /* ============================================================
@@ -1701,28 +1751,37 @@ section {
    FOOTER
    ============================================================ */
 .footer {
-  padding: 28px 60px;
+  /* This is the key: padding-left must be sidebar width + your desired padding */
+  padding: 28px 60px 28px 320px; 
   border-top: 1px solid var(--card-border);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Pushes text to left and status to right */
   font-size: 13px;
   color: var(--text2);
   background: var(--bg2);
+  width: 100%;
+  box-sizing: border-box;
 }
-
-/* availability status */
 
 .footer .footer-status {
   font-size: 12px;
-
   font-weight: 600;
-
   color: #22c55e;
-
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+
+/* Mobile: Remove sidebar offset when sidebar becomes a top-nav or hidden */
+@media (max-width: 768px) {
+  .footer {
+    padding: 28px 20px; 
+    flex-direction: column; /* Stack them on small screens */
+    gap: 10px;
+    text-align: center;
+  }
 }
 
 /* animated status dot */
